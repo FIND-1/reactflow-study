@@ -1,0 +1,100 @@
+.learning-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); min-height: 100dvh; }
+.learning-sidebar { padding: 28px 20px; background: white; border-right: 1px solid #dce2ec; }
+.learning-sidebar h2 { margin: 0; font-size: 22px; }
+.learning-sidebar p { font-size: 13px; line-height: 1.8; color: #64748b; }
+.learning-sidebar nav { display: grid; gap: 8px; margin-top: 24px; }
+.learning-sidebar nav h3 { margin: 0; font-size: 14px; grid-column: 1 / -1; }
+.learning-sidebar nav a { display: block; border: 1px solid transparent; border-radius: 8px; background: transparent; padding: 12px; text-align: left; color: #334155; text-decoration: none; }
+.learning-sidebar nav a:hover { background: #f6f8fb; }
+.learning-sidebar nav a[aria-current='page'] { background: #eef2ff; border-color: #c7d2fe; color: #4338ca; }
+.learning-sidebar small { display: block; margin-bottom: 5px; color: #64748b; }
+.next-lesson { margin-top: 28px; }
+.lesson-content { min-width: 0; }
+.lesson-guide { margin: 28px 32px 0; padding: 20px 24px; background: white; border: 1px solid #dce2ec; border-radius: 12px; font-size: 14px; line-height: 1.8; }
+.guide-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.guide-heading h2 { margin: 0; font-size: 20px; }
+.guide-heading a { color: #4f46e5; }
+.lesson-guide code { overflow-wrap: anywhere; }
+.lesson-guide ol { padding-left: 22px; }
+.lesson-boundary { color: #64748b; }
+.lesson-pagination { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 32px 24px; font-size: 13px; }
+.lesson-pagination button { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: white; color: #334155; }
+.lesson-pagination button:disabled { opacity: 0.45; cursor: default; }
+.concept-list { display: flex; flex-wrap: wrap; gap: 20px; margin: 0; font-size: 13px; line-height: 1.7; }
+.concept-list > div { flex: 1 1 200px; }
+.concept-list dt { font-weight: 600; }
+.concept-list dd { margin: 4px 0 0; color: #64748b; }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 680px;
+  min-height: 680px;
+  padding: 28px 32px 16px;
+  gap: 24px;
+}
+
+.app-header, .header-actions, .app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.eyebrow { margin: 0 0 8px; color: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 2px; }
+h1 { margin: 0; font-size: 26px; font-weight: 650; }
+.description { margin: 8px 0 0; color: #64748b; font-size: 14px; }
+.header-actions { flex-shrink: 0; font-size: 14px; }
+.header-actions a { color: #475569; text-decoration: none; }
+.header-actions a:hover { color: #4f46e5; }
+.header-actions button { padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; color: #334155; }
+.header-actions button:hover { background: #eef2ff; border-color: #a5b4fc; }
+
+/* React Flow 根据父容器尺寸绘制画布。这里用 flex: 1 分配页面剩余高度，
+   配合最小高度和全宽，避免容器没有高度时流程图无法正常显示。 */
+.flow-container {
+  flex: 1;
+  min-height: 360px;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #dce2ec;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.react-flow {
+  --xy-node-border-default: 1px solid #cbd5e1;
+  --xy-node-border-radius-default: 8px;
+  --xy-node-boxshadow-selected-default: 0 0 0 2px #6366f1;
+  --xy-handle-background-color-default: #6366f1;
+  --xy-edge-stroke-default: #94a3b8;
+  --xy-edge-stroke-selected-default: #6366f1;
+  --xy-background-pattern-dots-color-default: #dce2ec;
+}
+
+.react-flow__node-input { background: #eef2ff; border-color: #a5b4fc; }
+.react-flow__node-output { background: #ecfdf5; border-color: #6ee7b7; }
+.react-flow__node { padding: 16px 12px; font-size: 12px; }
+.react-flow__handle { width: 9px; height: 9px; }
+.react-flow__minimap { border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+.app-footer { color: #64748b; font-size: 12px; line-height: 1.7; }
+.app-footer p { margin: 0; }
+.app-footer span { white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .learning-layout { grid-template-columns: 1fr; }
+  .learning-sidebar { border-right: 0; border-bottom: 1px solid #dce2ec; }
+  .learning-sidebar nav { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .lesson-guide { margin: 16px 12px 0; padding: 16px; }
+  .lesson-pagination { padding: 8px 12px 20px; }
+  .concept-list { gap: 8px; }
+  .concept-list > div { flex-basis: 100%; }
+  .app { padding: 20px 12px 12px; gap: 16px; }
+  .app-header { align-items: flex-start; flex-direction: column; gap: 16px; }
+  h1 { font-size: 23px; }
+  .app-footer { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .react-flow__minimap { display: none; }
+}
