@@ -3,11 +3,16 @@ import QuickStartDemo from './01-quick-start/QuickStartDemo'
 import OverviewDemo from './02-overview/OverviewDemo'
 import BuildingFlowDemo from './03-building-a-flow/BuildingFlowDemo'
 
+export type LearningStatus = '未开始' | '骨架已准备' | '实现中' | '笔记完成' | '已验收'
+
 export type Lesson = {
   id: string
+  code: string
+  officialDocs: { title: string; url: string }[]
+  status: LearningStatus
+  deepensTopics: string[]
   group: string
   title: string
-  url: string
   file: string
   goal: string
   exercises: string[]
@@ -20,9 +25,12 @@ export type Lesson = {
 export const lessons: Lesson[] = [
   {
     id: 'quick-start',
+    code: 'A1',
+    officialDocs: [{ title: 'Quick Start', url: 'https://reactflow.dev/learn' }],
+    status: '骨架已准备',
+    deepensTopics: [],
     group: 'Quick Start',
     title: 'Quick Start',
-    url: 'https://reactflow.dev/learn',
     file: 'src/lessons/01-quick-start/QuickStartDemo.tsx',
     goal: '运行第一个流程图，先体验节点、连线与画布操作。',
     exercises: [
@@ -36,9 +44,12 @@ export const lessons: Lesson[] = [
   },
   {
     id: 'overview',
+    code: 'A2',
+    officialDocs: [{ title: 'Overview', url: 'https://reactflow.dev/learn/concepts/terms-and-definitions' }],
+    status: '骨架已准备',
+    deepensTopics: [],
     group: 'Core Concepts',
     title: 'Overview',
-    url: 'https://reactflow.dev/learn/concepts/terms-and-definitions',
     file: 'src/lessons/02-overview/OverviewDemo.tsx',
     goal: '认识 Node（节点）、Handle（连接点）、Edge（连线）和 Viewport（视口）。',
     exercises: [
@@ -52,9 +63,12 @@ export const lessons: Lesson[] = [
   },
   {
     id: 'building-a-flow',
+    code: 'A3',
+    officialDocs: [{ title: 'Building a Flow', url: 'https://reactflow.dev/learn/concepts/building-a-flow' }],
+    status: '骨架已准备',
+    deepensTopics: ['01-controlled-flow', '02-connection'],
     group: 'Core Concepts',
     title: 'Building a Flow',
-    url: 'https://reactflow.dev/learn/concepts/building-a-flow',
     file: 'src/lessons/03-building-a-flow/BuildingFlowDemo.tsx',
     goal: '按空画布 → 节点 → 连线 → 连线文字与类型的顺序搭建静态流程。',
     exercises: [

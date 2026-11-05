@@ -51,7 +51,10 @@ const onConnect = useCallback<OnConnect>((connection) => {
 
 - `src/lessons/01-*`～`03-*` 保留为基础示例；今后新增知识点必须放进 `src/topics/NN-name/`，不要继续往 lessons 累加。
 - 每个知识点目录必须有 README.md，写明对应编号笔记、SOURCE_MAP 条目、练习内容、状态与功能边界。
-- 在 `src/topics/index.ts` 注册 id、标题、组件、笔记路径、状态及学习指引；笔记路径相对于 demo 根目录。
+- 在 `src/topics/index.ts` 注册 id、显示编号、知识点标题、组件、笔记路径、状态及学习指引；笔记路径相对于 demo 根目录。显示编号使用 T01、T02……，与 topics 和 notes 编号一致，标题只写知识点名。
+- 新增知识点必须填写 `officialDocs: { title, url }[]` 与 `prerequisites`。`officialDocs` 可为空数组，页面不显示空文档行或占位文字；不要编造官方页面名或修改给定 URL。`prerequisites` 以 lessons 或 topics 注册表的唯一 id 数组记录，无前置时使用空数组；涉及入门关联时同步维护 `lessons/index.ts` 的 `deepensTopics`。
+- 新增知识点（包括“未开始”的计划）必须同时在 `docs/learning-path.md` 的“覆盖检查表”登记；已有官方页面更新对应知识点，空文档列表则在“无官方文档的知识点登记”中列出编号和标题，后续补充链接时同步更新。官方页面的安排只使用“对应知识点 / 需要时再学 / 暂不学”；覆盖登记不代表学习已完成。
+- 状态只使用“未开始 / 骨架已准备 / 实现中 / 笔记完成 / 已验收”；收尾项未完成不得标记“已验收”。未开始的计划条目只在侧栏灰色显示，不可点击，不加入 hash 页面和翻页列表。侧栏只显示“编号 · 标题”和知识点状态徽章，不显示官方文档说明；入门 A1、A2、A3 不显示状态徽章。显示编号不得改变现有目录、文件或 hash。
 - 创建对应 `../notes/NN-知识点.md`，并更新工作区根 `../README.md` 的进度表；编号在 topics 与 notes 中保持一致。
 - 左侧知识点导航由 topics 注册表生成，以 `location.hash` 切换，不引入路由库；基础示例继续由 lessons 注册表提供。
 - 移动文件时同步更新导入、Markdown 相对链接和路径说明，并逐个检查链接与锚点；不得删除已有练习或填写学习者保留的 TODO。

@@ -1,19 +1,25 @@
-.learning-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); min-height: 100dvh; }
+.learning-layout { display: grid; grid-template-columns: 330px minmax(0, 1fr); min-height: 100dvh; }
 .learning-sidebar { padding: 28px 20px; background: white; border-right: 1px solid #dce2ec; }
 .learning-sidebar h2 { margin: 0; font-size: 22px; }
 .learning-sidebar p { font-size: 13px; line-height: 1.8; color: #64748b; }
 .learning-sidebar nav { display: grid; gap: 8px; margin-top: 24px; }
 .learning-sidebar nav h3 { margin: 0; font-size: 14px; grid-column: 1 / -1; }
-.learning-sidebar nav a { display: block; border: 1px solid transparent; border-radius: 8px; background: transparent; padding: 12px; text-align: left; color: #334155; text-decoration: none; }
+.learning-sidebar .navigation-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid transparent; border-radius: 8px; background: transparent; padding: 12px; text-align: left; color: #334155; text-decoration: none; }
+.navigation-label { min-width: 0; overflow-wrap: anywhere; }
+.status-badge { flex-shrink: 0; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; color: #475569; font-size: 11px; white-space: nowrap; }
+.learning-sidebar .navigation-item.is-disabled { color: #94a3b8; cursor: default; }
+.is-disabled .status-badge { color: #94a3b8; }
 .learning-sidebar nav a:hover { background: #f6f8fb; }
 .learning-sidebar nav a[aria-current='page'] { background: #eef2ff; border-color: #c7d2fe; color: #4338ca; }
-.learning-sidebar small { display: block; margin-bottom: 5px; color: #64748b; }
 .next-lesson { margin-top: 28px; }
 .lesson-content { min-width: 0; }
 .lesson-guide { margin: 28px 32px 0; padding: 20px 24px; background: white; border: 1px solid #dce2ec; border-radius: 12px; font-size: 14px; line-height: 1.8; }
 .guide-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .guide-heading h2 { margin: 0; font-size: 20px; }
-.guide-heading a { color: #4f46e5; }
+.lesson-relations { margin-top: 16px; padding: 12px 16px; border-radius: 8px; background: #f8fafc; }
+.lesson-relations h3 { margin: 0 0 4px; font-size: 14px; }
+.lesson-relations p { margin: 4px 0; }
+.lesson-relations a { display: inline-block; margin-right: 12px; color: #4f46e5; }
 .lesson-guide code { overflow-wrap: anywhere; }
 .lesson-guide ol { padding-left: 22px; }
 .lesson-boundary { color: #64748b; }
@@ -84,7 +90,7 @@ h1 { margin: 0; font-size: 26px; font-weight: 650; }
 @media (max-width: 900px) {
   .learning-layout { grid-template-columns: 1fr; }
   .learning-sidebar { border-right: 0; border-bottom: 1px solid #dce2ec; }
-  .learning-sidebar nav { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .learning-sidebar nav { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 }
 
 @media (max-width: 640px) {

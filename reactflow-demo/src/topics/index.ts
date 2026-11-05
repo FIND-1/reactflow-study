@@ -1,22 +1,35 @@
-import type { Lesson } from '../lessons'
+import type { LearningStatus, Lesson } from '../lessons'
 import ControlledFlowExercise from './01-controlled-flow/ControlledFlowExercise'
 import ConnectionExercise from './02-connection/ConnectionExercise'
 
-export type Topic = Lesson & {
+type TopicMetadata = Pick<Lesson, 'id' | 'code' | 'title' | 'officialDocs'> & {
+  // 引用 lessons 或 topics 的唯一 id，允许知识点以前一个知识点为前置。
+  prerequisites: string[]
+}
+
+export type PreparedTopic = Omit<Lesson, 'deepensTopics' | 'status'> & TopicMetadata & {
   // 笔记路径相对于 reactflow-demo 根目录；用于定位源码文件，不是浏览器路由。
   notePath: string
-  status: '已实现，待学习验收' | '骨架已准备，待实现' | '已完成'
+  status: Exclude<LearningStatus, '未开始'>
 }
+
+// 未开始的条目只用于展示计划，不要求创建目录、笔记或可访问的页面。
+export type Topic = PreparedTopic | (TopicMetadata & { status: '未开始'; component?: never })
 
 // 知识点导航和学习状态统一在此登记；组件准备好不等于学习者已完成。
 export const topics: Topic[] = [
   {
     id: '01-controlled-flow',
+    code: 'T01',
+    officialDocs: [
+      { title: 'Adding Interactivity', url: 'https://reactflow.dev/learn/concepts/adding-interactivity' },
+      { title: 'Uncontrolled Flow', url: 'https://reactflow.dev/learn/advanced-use/uncontrolled-flow' },
+    ],
+    prerequisites: ['building-a-flow'],
     notePath: '../notes/01-受控流.md',
-    status: '已实现，待学习验收',
+    status: '笔记完成',
     group: 'Core Concepts',
-    title: 'Adding Interactivity · 受控流练习',
-    url: 'https://reactflow.dev/learn/concepts/adding-interactivity',
+    title: '受控流',
     file: 'src/topics/01-controlled-flow/ControlledFlowExercise.tsx',
     goal: '观察 changes，分别使用 Hook handler 和自己编写的 handler 完成受控状态更新。',
     exercises: [
@@ -32,11 +45,16 @@ export const topics: Topic[] = [
   },
   {
     id: '02-connection',
+    code: 'T02',
+    officialDocs: [
+      { title: 'Handles', url: 'https://reactflow.dev/learn/customization/handles' },
+      { title: 'Adding Interactivity', url: 'https://reactflow.dev/learn/concepts/adding-interactivity' },
+    ],
+    prerequisites: ['building-a-flow'],
     notePath: '../notes/02-连线.md',
-    status: '骨架已准备，待实现',
+    status: '骨架已准备',
     group: 'Core Concepts · Adding Interactivity 专题',
-    title: '连线 · Handle 与规则校验',
-    url: 'https://reactflow.dev/learn/concepts/adding-interactivity#handling-connections',
+    title: '连线',
     file: 'src/topics/02-connection/ConnectionExercise.tsx + connectionRules.ts',
     goal: '追踪从 Handle 拖动到 onConnect 的过程，自行实现方向、自连、环和重复节点对校验。',
     exercises: [
@@ -48,5 +66,39 @@ export const topics: Topic[] = [
     expected: '骨架可拖出临时线并输出每条规则的状态；完成 TODO 后，非法候选在拖线时被拒绝并给出规则反馈，合法候选松手后生成新边。',
     boundary: '这是 Adding Interactivity 下的独立连线专题，不代表已完成后续 Customization 章节。规则和存边逻辑待自行填写；数据探针只调用业务规则，不模拟库内 Handle 校验，也不创建边。',
     component: ConnectionExercise,
+  },
+  {
+    id: '03-custom-nodes', code: 'T03', title: '自定义节点', prerequisites: [], status: '未开始',
+    officialDocs: [
+      { title: 'Nodes', url: 'https://reactflow.dev/learn/customization/custom-nodes' },
+      { title: 'Utility Classes', url: 'https://reactflow.dev/learn/customization/utility-classes' },
+      { title: 'TypeScript', url: 'https://reactflow.dev/learn/advanced-use/typescript' },
+    ],
+  },
+  {
+    id: '04-store-and-hooks', code: 'T04', title: 'Store 与 Hooks', prerequisites: [], status: '未开始',
+    officialDocs: [
+      { title: 'Hooks and Providers', url: 'https://reactflow.dev/learn/advanced-use/hooks-providers' },
+      { title: 'State Management', url: 'https://reactflow.dev/learn/advanced-use/state-management' },
+    ],
+  },
+  {
+    id: '05-coordinates-and-viewport', code: 'T05', title: '坐标与视口', prerequisites: [], status: '未开始',
+    officialDocs: [{ title: 'The Viewport', url: 'https://reactflow.dev/learn/concepts/the-viewport' }],
+  },
+  {
+    id: '06-custom-edges', code: 'T06', title: '自定义边', prerequisites: [], status: '未开始',
+    officialDocs: [
+      { title: 'Edges', url: 'https://reactflow.dev/learn/customization/custom-edges' },
+      { title: 'Edge Labels', url: 'https://reactflow.dev/learn/customization/edge-labels' },
+    ],
+  },
+  {
+    id: '07-performance', code: 'T07', title: '性能', prerequisites: [], status: '未开始',
+    officialDocs: [{ title: 'Performance', url: 'https://reactflow.dev/learn/advanced-use/performance' }],
+  },
+  {
+    id: '08-computing-flows', code: 'T08', title: '节点间数据流', prerequisites: ['01-controlled-flow'], status: '未开始',
+    officialDocs: [{ title: 'Computing Flows', url: 'https://reactflow.dev/learn/advanced-use/computing-flows' }],
   },
 ]

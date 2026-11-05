@@ -1,16 +1,20 @@
 import { useSyncExternalStore } from 'react'
 import { lessons, type Lesson } from './lessons'
-import { topics } from './topics'
+import { topics, type PreparedTopic } from './topics'
 import './App.css'
 
-type Page = Lesson & { hash: string; notePath?: string; status?: string }
+type Page = ((Lesson & { kind: 'lesson' }) | (PreparedTopic & { kind: 'topic' })) & { hash: string }
 
-const topicPages: Page[] = topics.map((topic) => ({ ...topic, hash: `#topics/${topic.id}` }))
-const lessonPages: Page[] = lessons.map((lesson) => ({ ...lesson, hash: `#lessons/${lesson.id}` }))
+const topicEntries = topics.map((topic) => ({ ...topic, hash: `#topics/${topic.id}` }))
+// 未开始的知识点留在侧栏；只有已有组件的条目参与 hash 匹配和翻页。
+const topicPages: Page[] = topics
+  .filter((topic): topic is PreparedTopic => topic.status !== '未开始')
+  .map((topic) => ({ ...topic, kind: 'topic', hash: `#topics/${topic.id}` }))
+const lessonPages: Page[] = lessons.map((lesson) => ({ ...lesson, kind: 'lesson', hash: `#lessons/${lesson.id}` }))
 const pages = [...topicPages, ...lessonPages]
 const navigationGroups = [
-  { title: '知识点', pages: topicPages },
-  { title: '基础示例', pages: lessonPages },
+  { title: '入门', pages: lessonPages, showStatus: false },
+  { title: '知识点', pages: topicEntries, showStatus: true },
 ]
 
 function subscribeToHash(onChange: () => void) {
@@ -39,26 +43,57 @@ function App() {
         {navigationGroups.map((group) => (
           <nav key={group.title} aria-label={group.title}>
             <h3>{group.title}</h3>
-            {group.pages.map((item, index) => (
-              <a key={item.hash} href={item.hash} aria-current={item.hash === lesson.hash ? 'page' : undefined}>
-                <small>{item.status ?? item.group}</small>
-                {String(index + 1).padStart(2, '0')} · {item.title}
-              </a>
-            ))}
+            {group.pages.map((item) => {
+              const content = (
+                <>
+                  <span className="navigation-label">{item.code} · {item.title}</span>
+                  {group.showStatus && <span className="status-badge">{item.status}</span>}
+                </>
+              )
+
+              return item.status === '未开始' ? (
+                <span key={item.hash} className="navigation-item is-disabled" aria-disabled="true">{content}</span>
+              ) : (
+                <a key={item.hash} className="navigation-item" href={item.hash} aria-current={item.hash === lesson.hash ? 'page' : undefined}>{content}</a>
+              )
+            })}
           </nav>
         ))}
-        <p className="next-lesson">知识点编号对应 notes 与 topics 目录；基础示例保留原顺序。实现状态不代表学习已完成。</p>
+        <p className="next-lesson">T 编号对应 notes 与 topics 编号；入门示例使用 A 编号，保留原顺序。未开始条目暂不可打开，实现状态不代表学习已完成。</p>
       </aside>
 
       <main className="lesson-content">
         <section className="lesson-guide" aria-label={`${lesson.title} 学习指引`}>
           <div className="guide-heading">
             <h2>{lesson.title}</h2>
-            <a href={lesson.url} target="_blank" rel="noreferrer">阅读官方章节 ↗</a>
           </div>
+          {/* 关联项只保存注册表 ID，在这里解析标题与原有 hash，避免组件重复维护映射。 */}
+          <section className="lesson-relations" aria-label="关联">
+            <h3>关联</h3>
+            {lesson.kind === 'topic' ? (
+              lesson.prerequisites.length > 0 && <p><strong>前置学习：</strong>{lesson.prerequisites.map((id) => {
+                const prerequisite = [...lessonPages, ...topicEntries].find((item) => item.id === id)
+                if (!prerequisite) return null
+                return prerequisite.status === '未开始'
+                  ? <span key={id}>{prerequisite.code} · {prerequisite.title}</span>
+                  : <a key={id} href={prerequisite.hash}>{prerequisite.code} · {prerequisite.title}</a>
+              })}</p>
+            ) : (
+              <p><strong>之后深入的知识点：</strong>{lesson.deepensTopics.length ? lesson.deepensTopics.map((id) => {
+                const topic = topicEntries.find((item) => item.id === id)
+                if (!topic) return null
+                return topic.status === '未开始'
+                  ? <span key={id}>{topic.code} · {topic.title}</span>
+                  : <a key={id} href={topic.hash}>{topic.code} · {topic.title}</a>
+              }) : '暂无'}</p>
+            )}
+            {lesson.officialDocs.length > 0 && <p><strong>官方文档：</strong>{lesson.officialDocs.map((doc) => (
+              <a key={doc.url} href={doc.url} target="_blank" rel="noreferrer">{doc.title} ↗</a>
+            ))}</p>}
+          </section>
           <p><strong>学习目标：</strong>{lesson.goal}</p>
           <p><strong>练习文件：</strong><code>{lesson.file}</code></p>
-          {lesson.notePath && <p><strong>笔记文件（相对 demo 根目录）：</strong><code>{lesson.notePath}</code></p>}
+          {lesson.kind === 'topic' && <p><strong>笔记文件（相对 demo 根目录）：</strong><code>{lesson.notePath}</code></p>}
           {lesson.status && <p><strong>状态：</strong>{lesson.status}</p>}
           <ol>{lesson.exercises.map((exercise) => <li key={exercise}>{exercise}</li>)}</ol>
           <p><strong>预期现象：</strong>{lesson.expected}</p>
