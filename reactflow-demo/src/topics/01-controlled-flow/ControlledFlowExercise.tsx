@@ -75,6 +75,15 @@ function ManualHandlerExercise() {
 
   const handleNodesChange = useCallback<OnNodesChange>((changes) => {
     console.log('[B / applyNodeChanges] onNodesChange', changes)
+    // 练习 1.6（可选）：一次拖动会来 9 批 dragging: true 的中间位置 + 1 批 dragging: false 的终点。
+    // 只想记录「松手那一刻的最终位置」时，按 dragging 过滤即可，不必自己算防抖；
+    // 中间态照样应用，界面不会因此卡顿，这里只是少打日志/少写历史记录。
+    const restingChanges = changes.filter(
+      (change) => change.type === 'position' && change.dragging === false,
+    )
+    if (restingChanges.length > 0) {
+      console.log('[B / 练习 1.6] 拖动结束时的位置', restingChanges)
+    }
     // 练习 1.5：changes 是「请求」，不是「命令」——这里把 n1 的 remove 丢掉。
     // 只丢这一条，位置、选中、尺寸照旧应用，所以拖动和选中完全不受影响。
     const acceptedChanges = changes.filter(
