@@ -1,7 +1,7 @@
 import type { Connection, Edge, Node } from '@xyflow/react'
 
 export type ExerciseNode = Node<{ label: string; role: 'start' | 'task' | 'end' }, 'connectionLesson'>
-export type RuleVerdict = 'pass' | 'fail' | 'pending'
+export type RuleVerdict = 'pass' | 'fail'
 
 type ValidationContext = {
   connection: Connection
@@ -9,7 +9,7 @@ type ValidationContext = {
   edges: readonly Edge[]
 }
 
-// 规则只看候选连接和当前图，返回 pass / fail；pending 只表示还没填写，不代表通过。
+// 规则只看候选连接和当前图，返回 pass / fail。
 // 五条规则都会执行，所以允许「多条同时 fail」——拒绝原因不会被前一条挡住。
 
 // 端点查不到时返回 undefined：库内已经保证拖出来的端点存在，

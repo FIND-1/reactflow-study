@@ -7,7 +7,7 @@
 | 知识点 | 笔记链接 | demo 链接 | 官方文档 | 前置学习 | 状态 |
 | --- | --- | --- | --- | --- | --- |
 | T01 · 受控流 | [01-受控流.md](notes/01-受控流.md) | [01-controlled-flow](reactflow-demo/src/topics/01-controlled-flow/README.md) | [Adding Interactivity](https://reactflow.dev/learn/concepts/adding-interactivity)、[Uncontrolled Flow](https://reactflow.dev/learn/advanced-use/uncontrolled-flow) | A3 · Building a Flow | 笔记完成 |
-| T02 · 连线 | [02-连线.md](notes/02-连线.md) | [02-connection](reactflow-demo/src/topics/02-connection/README.md) | [Handles](https://reactflow.dev/learn/customization/handles)、[Adding Interactivity](https://reactflow.dev/learn/concepts/adding-interactivity) | A3 · Building a Flow | 骨架已准备 |
+| T02 · 连线 | [02-连线.md](notes/02-连线.md) | [02-connection](reactflow-demo/src/topics/02-connection/README.md) | [Handles](https://reactflow.dev/learn/customization/handles)、[Adding Interactivity](https://reactflow.dev/learn/concepts/adding-interactivity) | A3 · Building a Flow | 笔记完成 |
 | T03 · 自定义节点 | — | — | [Nodes](https://reactflow.dev/learn/customization/custom-nodes)、[Utility Classes](https://reactflow.dev/learn/customization/utility-classes)、[TypeScript](https://reactflow.dev/learn/advanced-use/typescript) | — | 未开始 |
 | T04 · Store 与 Hooks | — | — | [Hooks and Providers](https://reactflow.dev/learn/advanced-use/hooks-providers)、[State Management](https://reactflow.dev/learn/advanced-use/state-management) | — | 未开始 |
 | T05 · 坐标与视口 | — | — | [The Viewport](https://reactflow.dev/learn/concepts/the-viewport) | — | 未开始 |

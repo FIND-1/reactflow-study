@@ -63,7 +63,7 @@ function ConnectionLessonNode({ data, isConnectable }: NodeProps<ExerciseNode>) 
 }
 
 const nodeTypes = { connectionLesson: ConnectionLessonNode } satisfies NodeTypes
-const verdictLabels: Record<RuleVerdict, string> = { pass: '通过', fail: '拒绝', pending: '待实现' }
+const verdictLabels: Record<RuleVerdict, string> = { pass: '通过', fail: '拒绝' }
 
 // 这些是合成数据探针，不经过 Handle 命中和库内校验，也不会创建边。
 // End → A 与 A → Start 在正常端口布局里无法构造，需单独检查规则函数。
@@ -97,7 +97,7 @@ export default function ConnectionExercise() {
       console.groupEnd()
       lastReport.current = reportKey
     }
-    // 未填写的规则不能伪装成成功；补齐规则后反馈线路不需要重写。
+    // 任一规则 fail 就拒绝该候选；五条规则都执行，拒绝原因不会互相遮挡。
     return results.every(({ verdict }) => verdict === 'pass')
   }, [nodes, edges])
 
@@ -126,7 +126,7 @@ export default function ConnectionExercise() {
     <section className="app connection-exercise">
       <header>
         <p className="eyebrow">ADDING INTERACTIVITY / CONNECTIONS</p>
-        <h1>连线：先观察，再填写规则</h1>
+        <h1>连线：规则校验与受控存边</h1>
         <p className="description">预置 A → B → C。R1–R5 在 connectionRules.ts，新边在 onConnect 里用 addEdge 写回 edges。</p>
         <p className="description">五条规则全部 pass 才放行：拖线时连接点变成绿色＝通过，橙色＝被拒绝；规则明细看控制台表格。</p>
       </header>
