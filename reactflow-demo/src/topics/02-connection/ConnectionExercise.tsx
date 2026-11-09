@@ -82,6 +82,8 @@ export default function ConnectionExercise() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const lastReport = useRef('')
   // 用于验证「一次拖线 isValidConnection 被调用几次」：只在拖线结束时打印，不逐次刷屏。
+  // 库只在落点 Handle 可连接且方向符合 Strict 模式（source ↔ target）时才调用它，
+  // 方向不符的落点不会进入业务规则，也就不计数。
   const validationCalls = useRef(0)
 
   const inspectConnection = useCallback((connection: Connection, origin: '拖线校验' | '数据探针') => {
@@ -89,7 +91,8 @@ export default function ConnectionExercise() {
     if (origin === '拖线校验') validationCalls.current += 1
     const results = evaluateConnection({ connection, nodes, edges })
     const reportKey = JSON.stringify({ connection, results })
-    // 同一候选和结果只打印一次；每次拖线开始重置，避免鼠标移动时刷屏。
+    // 只和「上一次打印」比较：连续相同的候选和结果不重复打印，避免鼠标移动时刷屏；
+    // 在两个候选之间来回移动仍会重复打印。每次拖线开始时重置。
     if (origin === '数据探针' || reportKey !== lastReport.current) {
       console.group(`[连线 / ${origin}] ${connection.source} → ${connection.target}`)
       console.log('候选连接', connection)
@@ -161,7 +164,7 @@ export default function ConnectionExercise() {
               isValid: state.isValid,
               from: state.fromHandle,
               to: state.toHandle,
-              // 一次拖线里业务校验被调用了几次（图省事才攒到最后一起打）。
+              // 本次拖线中业务校验被调用的次数；拖线过程中只累加，结束时统一打印。
               validationCalls: validationCalls.current,
             })
             if (!lastReport.current) console.info('[连线] 本次没有进入业务规则回调，请记录落点、Handle 类型及库内限制，先不要断定原因。')
@@ -173,7 +176,7 @@ export default function ConnectionExercise() {
           <Controls showInteractive={false} />
         </ReactFlow>
       </section>
-      <p className="app-footer">连接点：绿色＝五条规则整体通过，橙色＝有规则拒绝，具体规则看控制台表格。普通节点底部是第二个输出点；换端口仍按同一 source → target 判重。切换章节或刷新恢复起始图。</p>
+      <p className="app-footer">连接点：绿色＝五条规则整体通过，橙色＝被拒绝（有规则 fail，或端口方向不符而未进入规则），具体规则看控制台表格。普通节点底部是第二个输出点；换端口仍按同一 source → target 判重。切换章节或刷新恢复起始图。</p>
     </section>
   )
 }

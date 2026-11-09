@@ -72,7 +72,7 @@ function checkDuplicatePair({ connection, edges }: ValidationContext): RuleVerdi
   return duplicated ? 'fail' : 'pass'
 }
 
-// 反馈线路已接好：每条规则都会执行，避免前一条失败后看不到后面的练习结果。
+// 固定按 R1–R5 顺序返回全部结果，控制台表格的行顺序与规则编号一致。
 export function evaluateConnection(context: ValidationContext) {
   return [
     { rule: 'R1 · End 禁止输出', verdict: checkEndOutgoing(context) },

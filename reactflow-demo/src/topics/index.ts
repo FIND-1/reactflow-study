@@ -8,7 +8,7 @@ type TopicMetadata = Pick<Lesson, 'id' | 'code' | 'title' | 'officialDocs'> & {
 }
 
 export type PreparedTopic = Omit<Lesson, 'deepensTopics' | 'status'> & TopicMetadata & {
-  // 笔记路径相对于 reactflow-demo 根目录；用于定位源码文件，不是浏览器路由。
+  // 笔记路径相对于 reactflow-demo 根目录；页面只把它作为文本显示，方便找到笔记文件，不是浏览器路由。
   notePath: string
   status: Exclude<LearningStatus, '未开始'>
 }
@@ -40,7 +40,7 @@ export const topics: Topic[] = [
       'B 组练习 1.5：选中 n1 按 Delete，看日志里节点和边的 remove 都到了、画布却什么都不变；再选中 n2 按 Delete，确认 n2 和 n1-n2 一起消失、n1 仍在。',
     ],
     expected: '两组都支持节点拖动、选中与删除；注释掉更新语句后画布不再跟随操作。B 组把 n1 的 remove 请求丢掉（同时拒绝相连边的 remove），所以删 n1 只剩一条 warn 日志，删 n2 则照常连同边一起删除。',
-    boundary: '本章只覆盖受控状态更新，不包含新建连线。B 组的锁定是「在 changes 落到状态之前拒绝请求」，n1 和它的连线都不允许删除；想自己重练可注释掉 handler 里的更新语句；切换 A/B 也会重置画布。',
+    boundary: '本章只覆盖受控状态更新，不包含新建连线。B 组的锁定是「在 changes 落到状态之前拒绝请求」，n1 和它的连线都不允许删除；B 组唯一的边 n1-n2 连着 n1，直接选中删除会被静默拒绝，练习删边请用 A 组。想自己重练可注释掉 handler 里的更新语句；切换 A/B 也会重置画布。',
     component: ControlledFlowExercise,
   },
   {

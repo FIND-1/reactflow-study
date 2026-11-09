@@ -5,6 +5,8 @@
 /* 提示放在节点外，不改变拖线期间节点尺寸和 Handle 位置。 */
 .connection-structure-hint { position: absolute; left: 0; right: 0; bottom: calc(100% + 8px); padding: 4px; border-radius: 4px; background: #fffbeb; color: #92400e; font-size: 11px; }
 .connection-exercise .react-flow__handle { width: 12px; height: 12px; }
+/* connectingto：拖线时鼠标命中的落点；valid 由库按「方向符合 + isValidConnection 通过」添加。
+   所以橙色可能是业务规则拒绝，也可能是端口方向不符（此时不会进入业务规则）。 */
 .connection-exercise .react-flow__handle.connectingto { background: #d97706; outline: 3px solid #fde68a; }
 .connection-exercise .react-flow__handle.connectingto.valid { background: #15803d; outline-color: #bbf7d0; }
 .connection-probes { font-size: 13px; line-height: 1.7; }

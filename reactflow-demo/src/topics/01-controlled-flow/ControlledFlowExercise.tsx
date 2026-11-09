@@ -27,7 +27,8 @@ const initialEdges: Edge[] = [
 const LOCKED_NODE_ID = 'n1'
 
 function HookHandlerExercise() {
-  // useNodesState 返回 [nodes, setNodes, onNodesChange]；第三个值已经把 changes 应用到最新状态。
+  // useNodesState 返回 [nodes, setNodes, onNodesChange]；第三个值是现成的 handler，
+  // 调用它时内部才用 applyNodeChanges 把 changes 应用到最新状态。
   // 中间的 setter 这里用不到，用空位跳过。
   const [nodes, , onNodesChange] = useNodesState(initialNodes)
   // 边的对照：useEdgesState 结构与 useNodesState 相同，只是类型和应用 changes 的函数不同。
@@ -76,8 +77,9 @@ function ManualHandlerExercise() {
   const handleNodesChange = useCallback<OnNodesChange>((changes) => {
     console.log('[B / applyNodeChanges] onNodesChange', changes)
     // 练习 1.6（可选）：拖动中会收到 dragging: true 的位置，结束时收到 dragging: false；批次数取决于实际移动事件。
-    // 只想记录「松手那一刻的最终位置」时，按 dragging 过滤即可，不必自己算防抖；
-    // 中间态照样应用，界面不会因此卡顿，这里只是少打日志/少写历史记录。
+    // 只想在「松手那一刻」写日志或历史记录时，按 dragging 过滤即可，不必自己算防抖；
+    // 过滤只影响这条额外日志，所有 changes 仍照常应用（上面的完整日志也照打）。
+    // 只关心拖动结束时也可以用 onNodeDragStop；这里放在 onNodesChange 里，便于统一观察 changes。
     const restingChanges = changes.filter(
       (change) => change.type === 'position' && change.dragging === false,
     )
@@ -96,11 +98,13 @@ function ManualHandlerExercise() {
     // 用更新函数把结果写回状态，画布才能收到新位置和选中状态。
     setNodes((currentNodes) => applyNodeChanges(acceptedChanges, currentNodes))
 
-    // 收尾：删掉一个节点时，库会顺带删掉和它相连的边（getElementsToRemove 里的
-    // getConnectedEdges），而边和节点是两批独立的 change，且边那一批先到
+    // 收尾：删节点时库会把相连的边一并删除（getElementsToRemove → getConnectedEdges），
+    // 边和节点是两批独立的 change，且边那一批先到
     // （useReactFlow.ts 的 deleteElements：先 triggerEdgeChanges，再 triggerNodeChanges）。
-    // 也就是说只有走到节点这一批，才知道「这次真正删掉了哪些节点」。
-    // 所以在这里把两端已不在图里的边清掉，避免状态里留下指向已删节点的悬空边。
+    // 但 handleEdgesChange 会拒绝所有连着 n1 的边的 remove——删 n2 时，n1-n2 也会被拦下。
+    // 边那一批分不清「直接删边」和「因删节点而连带删边」，只有到节点这一批才知道
+    // 哪些节点真的被删了，所以在这里补删端点已不存在的边，避免留下悬空边。
+    // 去掉这段，删 n2 后 n1-n2 会留在 edges 里。
     const removedNodeIds = acceptedChanges.flatMap((change) =>
       change.type === 'remove' ? [change.id] : [],
     )
@@ -119,6 +123,8 @@ function ManualHandlerExercise() {
     // 练习 1.5 的连带问题：删 n1 时库会把相连的边一起删掉，我们已经拦下 n1 的 remove，
     // 这条边也必须留下，否则 n1 会变成一个没有连线的孤立节点。所以和锁定节点相连的边
     // 同样拒绝 remove——换句话说，n1 和它的连线是一起锁住的。
+    // 注意这条规则一刀切：直接选中 n1 的连线按 Delete 也会被静默拒绝（没有 warn）；
+    // 删 n2 时连带的 n1-n2 也会被拦下，由 handleNodesChange 末尾的清理补删。
     // remove 只带 id，要在当前边里查出两个端点才知道它是否连着锁定节点；
     // 这段判断放进更新函数里，就不需要把 edges 写进依赖数组。
     setEdges((currentEdges) => {
