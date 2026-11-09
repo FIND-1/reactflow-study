@@ -30,7 +30,7 @@ const initialNodes: ExerciseNode[] = [
 ]
 
 const defaultEdgeOptions = { markerEnd: { type: MarkerType.ArrowClosed } }
-// 预置 A → B → C，便于在 TODO 完成前就尝试重复边和跨三节点的环。
+// 预置 A → B → C，便于验证重复节点对和跨三节点的有向环。
 const initialEdges: Edge[] = [
   { id: 'a-b', source: 'a', sourceHandle: 'out-main', target: 'b', targetHandle: 'in' },
   { id: 'b-c', source: 'b', sourceHandle: 'out-main', target: 'c', targetHandle: 'in' },
@@ -132,7 +132,7 @@ export default function ConnectionExercise() {
       </header>
       <details className="connection-probes">
         <summary>候选数据探针（输出到控制台，不是真实拖线）</summary>
-        <p>用于测试没有对应 Handle 的非法数据；结果取决于你填写的规则。Start/End 的结构提示不等于业务校验通过。</p>
+        <p>用于测试没有对应 Handle 的非法数据；结果取决于当前图与 R1–R5。Start/End 的结构提示不等于业务校验通过。</p>
         <div className="header-actions">
           {probes.map(({ label, connection }) => (
             <button key={label} type="button" onClick={() => inspectConnection(connection, '数据探针')}>{label}</button>

@@ -31,7 +31,7 @@ pnpm preview  # 预览构建结果
 | A2 | Overview | 骨架已准备；图示辨认节点、连接点、连线和视口 |
 | A3 | Building a Flow | 骨架已准备；从静态数据搭建节点、连线，调整位置、文字和线形；之后深入 T01、T02 |
 | T01 | [受控流](src/topics/01-controlled-flow/README.md) | 笔记完成；两种 handler 对照，手写组还锁定了一个不可删除的节点；收尾项完成前不标已验收 |
-| T02 | [连线](src/topics/02-connection/README.md) | 骨架已准备；Handle、校验与创建边；官方文档为 Handles、Adding Interactivity |
+| T02 | [连线](src/topics/02-connection/README.md) | 笔记完成；Handle、R1–R5 校验与受控存边已实现，待 review 验收 |
 
 T03–T08 为尚未开始的计划条目；T08“节点间数据流”以前置 T01“受控流”衔接 Computing Flows，暂不创建页面、练习目录或笔记。完整进度见[工作区 README](../README.md)，官方页面安排见[覆盖检查表](docs/learning-path.md#覆盖检查表)。
 
@@ -43,11 +43,11 @@ B 组的练习 1.5 把 `n1` 设成不可删除的流程入口：`handleNodesChan
 
 连线和受控流现在分别位于 `src/topics/02-connection/` 与 `src/topics/01-controlled-flow/`，阅读主线仍对应 Adding Interactivity：
 
-- [ConnectionExercise.tsx](src/topics/02-connection/ConnectionExercise.tsx)：Start 只有输出、End 只有输入，临时连线与日志已接好，C1/C2 存边逻辑留空。
-- [connectionRules.ts](src/topics/02-connection/connectionRules.ts)：R1–R5 分别练习 End 禁止输出、Start 禁止输入、自连、有向环和重复节点对；不提供判断答案。
-- [连线笔记](../notes/02-连线.md)：阅读问题与“预测 vs 实际”表格，个人理解与问题留空。
+- [ConnectionExercise.tsx](src/topics/02-connection/ConnectionExercise.tsx)：Start 只有输出、End 只有输入，临时连线与日志已接好；C1/C2 通过 `addEdge` 将合法连接写回 edges。
+- [connectionRules.ts](src/topics/02-connection/connectionRules.ts)：R1–R5 已实现 End 禁止输出、Start 禁止输入、自连、有向环和重复节点对校验。
+- [连线笔记](../notes/02-连线.md)：包含阅读问题、“预测 vs 实际”、个人理解、补答和问题记录；新增无 id 多出口实验与前后端职责说明。
 
-当前规则全部返回“待实现”，因此统一拒绝新连接，不代表校验已经完成。每次进入业务校验会输出逐条规则结果；Start/End 拖线时显示结构提示。数据探针可补测 End→A、A→Start 等正常端口布局无法产生的候选，它们不经过库内校验、不创建边。初始 A→B→C 用于环和重复边练习；重复按有向 source→target 判断，不区分 Handle。完成后再说“我写完了”进行 review。
+当前五条规则全部通过才允许创建新边；任一拒绝都会阻止该候选。每次进入业务校验会生成逐条规则结果，相同候选与结果的控制台日志会去重；Start/End 拖线时显示结构提示。数据探针可补测 End→A、A→Start 等正常端口布局无法产生的候选，它们不经过库内校验、不创建边。初始 A→B→C 用于环和重复边练习；重复按有向 source→target 判断，不区分 Handle。规则属于本练习约定，不自动适用于允许分支汇合或循环的工作流产品；review 通过前保持“笔记完成”。
 
 - [src/App.tsx](src/App.tsx)：hash 导航、学习指引和翻页。
 - [src/topics/index.ts](src/topics/index.ts)：知识点 id、标题、组件、笔记路径、状态与练习任务登记。

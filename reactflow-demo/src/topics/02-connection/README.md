@@ -2,8 +2,8 @@
 
 - 笔记：[02-连线.md](../../../../notes/02-连线.md)
 - 源码地图：[2. 连线](../../../../SOURCE_MAP.md#2-连线)
-- 画布骨架：[ConnectionExercise.tsx](ConnectionExercise.tsx)
-- 规则骨架：[connectionRules.ts](connectionRules.ts)
+- 画布实现：[ConnectionExercise.tsx](ConnectionExercise.tsx)
+- 规则实现：[connectionRules.ts](connectionRules.ts)
 - 反馈样式：[connections.css](connections.css)
 - 注册表：[topics/index.ts](../index.ts)
 - 状态：笔记完成（规则与存边已实现，待 review 验收）。

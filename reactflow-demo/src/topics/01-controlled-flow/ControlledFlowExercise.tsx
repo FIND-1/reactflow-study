@@ -75,7 +75,7 @@ function ManualHandlerExercise() {
 
   const handleNodesChange = useCallback<OnNodesChange>((changes) => {
     console.log('[B / applyNodeChanges] onNodesChange', changes)
-    // 练习 1.6（可选）：一次拖动会来 9 批 dragging: true 的中间位置 + 1 批 dragging: false 的终点。
+    // 练习 1.6（可选）：拖动中会收到 dragging: true 的位置，结束时收到 dragging: false；批次数取决于实际移动事件。
     // 只想记录「松手那一刻的最终位置」时，按 dragging 过滤即可，不必自己算防抖；
     // 中间态照样应用，界面不会因此卡顿，这里只是少打日志/少写历史记录。
     const restingChanges = changes.filter(
