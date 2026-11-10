@@ -8,9 +8,9 @@
 | --- | --- | --- | --- | --- | --- |
 | T01 · 受控流 | [01-受控流.md](notes/01-受控流.md) | [01-controlled-flow](reactflow-demo/src/topics/01-controlled-flow/README.md) | [Adding Interactivity](https://reactflow.dev/learn/concepts/adding-interactivity)、[Uncontrolled Flow](https://reactflow.dev/learn/advanced-use/uncontrolled-flow) | A3 · Building a Flow | 笔记完成 |
 | T02 · 连线 | [02-连线.md](notes/02-连线.md) | [02-connection](reactflow-demo/src/topics/02-connection/README.md) | [Handles](https://reactflow.dev/learn/customization/handles)、[Adding Interactivity](https://reactflow.dev/learn/concepts/adding-interactivity) | A3 · Building a Flow | 笔记完成 |
-| T03 · 自定义节点 | — | — | [Nodes](https://reactflow.dev/learn/customization/custom-nodes)、[Utility Classes](https://reactflow.dev/learn/customization/utility-classes)、[TypeScript](https://reactflow.dev/learn/advanced-use/typescript) | — | 未开始 |
+| T03 · 自定义节点 | [03-自定义节点.md](notes/03-自定义节点.md) | [03-custom-nodes](reactflow-demo/src/topics/03-custom-nodes/README.md) | [Nodes](https://reactflow.dev/learn/customization/custom-nodes)、[Utility Classes](https://reactflow.dev/learn/customization/utility-classes)、[TypeScript](https://reactflow.dev/learn/advanced-use/typescript) | T01 · 受控流；T02 · 连线 | 骨架已准备 |
 | T04 · Store 与 Hooks | — | — | [Hooks and Providers](https://reactflow.dev/learn/advanced-use/hooks-providers)、[State Management](https://reactflow.dev/learn/advanced-use/state-management) | — | 未开始 |
-| T05 · 坐标与视口 | — | — | [The Viewport](https://reactflow.dev/learn/concepts/the-viewport) | — | 未开始 |
+| T05 · 坐标与视口 | [05-坐标与视口.md](notes/05-坐标与视口.md) | [05-coordinates-and-viewport](reactflow-demo/src/topics/05-coordinates-and-viewport/README.md) | [The Viewport](https://reactflow.dev/learn/concepts/the-viewport) | T01 · 受控流 | 骨架已准备 |
 | T06 · 自定义边 | — | — | [Edges](https://reactflow.dev/learn/customization/custom-edges)、[Edge Labels](https://reactflow.dev/learn/customization/edge-labels) | — | 未开始 |
 | T07 · 性能 | — | — | [Performance](https://reactflow.dev/learn/advanced-use/performance) | — | 未开始 |
 | T08 · 节点间数据流 | — | — | [Computing Flows](https://reactflow.dev/learn/advanced-use/computing-flows) | T01 · 受控流 | 未开始 |
@@ -43,6 +43,8 @@ pnpm dev
 | --- | --- |
 | 受控流 | `#topics/01-controlled-flow` |
 | 连线 | `#topics/02-connection` |
+| 自定义节点 | `#topics/03-custom-nodes` |
+| 坐标与视口 | `#topics/05-coordinates-and-viewport` |
 | Quick Start | `#lessons/quick-start` |
 | Overview | `#lessons/overview` |
 | Building a Flow | `#lessons/building-a-flow` |

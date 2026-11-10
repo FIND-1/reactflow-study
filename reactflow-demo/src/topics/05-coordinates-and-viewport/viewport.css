@@ -1,0 +1,8 @@
+.viewport-exercise.app { height: auto; min-height: 760px; }
+.viewport-exercise .flow-container { flex: none; height: 460px; }
+.viewport-actions { flex-wrap: wrap; justify-content: flex-start; gap: 12px; }
+.viewport-actions [role='group'] { display: flex; flex-wrap: wrap; gap: 8px; }
+.viewport-actions button[aria-pressed='true'] { background: #eef2ff; border-color: #6366f1; color: #3730a3; }
+.viewport-place-toggle { display: inline-flex; align-items: center; gap: 6px; color: #334155; }
+/* 读数用等宽字体，数字变化时宽度不跳动。 */
+.viewport-readout { margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; color: #334155; }

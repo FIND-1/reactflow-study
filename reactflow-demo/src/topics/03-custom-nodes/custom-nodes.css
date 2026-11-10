@@ -1,0 +1,72 @@
+.custom-nodes-exercise.app { height: auto; min-height: 760px; }
+.custom-nodes-exercise .flow-container { flex: none; height: 480px; }
+.custom-nodes-warning { color: #b45309; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 6px 10px; font-size: 13px; }
+
+.inspector-card-node {
+  width: 260px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+  font-size: 12px;
+  color: #1e293b;
+  text-align: left;
+}
+
+.inspector-card-node[data-selected='true'] {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.inspector-card-node[data-dragging='true'] {
+  opacity: 0.88;
+}
+
+.inspector-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.inspector-card-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #475569;
+}
+
+.inspector-card-badges code,
+.inspector-card-badges span {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #f1f5f9;
+}
+
+.inspector-card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.inspector-card-field input[type='text'] {
+  padding: 4px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.inspector-card-notes {
+  margin: 0;
+  padding: 6px 8px 6px 20px;
+  max-height: 68px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #f8fafc;
+  line-height: 1.5;
+}

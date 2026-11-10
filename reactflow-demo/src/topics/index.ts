@@ -1,6 +1,8 @@
 import type { LearningStatus, Lesson } from '../lessons'
 import ControlledFlowExercise from './01-controlled-flow/ControlledFlowExercise'
 import ConnectionExercise from './02-connection/ConnectionExercise'
+import CustomNodesExercise from './03-custom-nodes/CustomNodesExercise'
+import ViewportExercise from './05-coordinates-and-viewport/ViewportExercise'
 
 type TopicMetadata = Pick<Lesson, 'id' | 'code' | 'title' | 'officialDocs'> & {
   // 引用 lessons 或 topics 的唯一 id，允许知识点以前一个知识点为前置。
@@ -68,12 +70,29 @@ export const topics: Topic[] = [
     component: ConnectionExercise,
   },
   {
-    id: '03-custom-nodes', code: 'T03', title: '自定义节点', prerequisites: [], status: '未开始',
+    id: '03-custom-nodes',
+    code: 'T03',
     officialDocs: [
       { title: 'Nodes', url: 'https://reactflow.dev/learn/customization/custom-nodes' },
       { title: 'Utility Classes', url: 'https://reactflow.dev/learn/customization/utility-classes' },
       { title: 'TypeScript', url: 'https://reactflow.dev/learn/advanced-use/typescript' },
     ],
+    prerequisites: ['01-controlled-flow', '02-connection'],
+    notePath: '../notes/03-自定义节点.md',
+    status: '骨架已准备',
+    group: 'Customization',
+    title: '自定义节点',
+    file: 'src/topics/03-custom-nodes/CustomNodesExercise.tsx',
+    goal: '定义带 TypeScript 类型的自定义节点并注册到 nodeTypes，用 updateNodeData 从节点内部更新 data，并用 nodrag / nowheel / nopan 解决内部控件与画布手势冲突。',
+    exercises: [
+      '不改代码：打开页面和控制台，观察未在 nodeTypes 中注册 inspectorCard 时的 003 告警及默认节点回退现象。',
+      'N3：在模块顶层的 nodeTypes 中注册 InspectorCardNodeComponent，刷新或保存后先故意拉动滑块、在备注框滚轮，体验手势冲突。',
+      'N1：在 UTILITY_CLASSES 中填写 nodrag、nowheel、nopan，确认拉滑块不再带动节点移动、备注框滚轮不再缩放画布，而拖标题栏仍可移动节点。',
+      'N2：在 handleTitleChange 与 handleStepChange 中调用 updateNodeData，观察控制台 onNodesChange 收到的 replace 类型 change。',
+    ],
+    expected: '注册 nodeTypes 后两张自定义卡片正常渲染且带左右连接点；补齐工具类名后内部输入框、滑块和滚动条可独立操作；修改输入或滑块通过 updateNodeData 更新节点 data。',
+    boundary: '本章只覆盖自定义节点注册、NodeProps 类型、内部控件更新自身 data 及工具类名，不包含跨节点数据计算（T08）或自定义边（T06）。N1–N3 为待学习者填写的 TODO。',
+    component: CustomNodesExercise,
   },
   {
     id: '04-store-and-hooks', code: 'T04', title: 'Store 与 Hooks', prerequisites: [], status: '未开始',
@@ -83,8 +102,26 @@ export const topics: Topic[] = [
     ],
   },
   {
-    id: '05-coordinates-and-viewport', code: 'T05', title: '坐标与视口', prerequisites: [], status: '未开始',
+    id: '05-coordinates-and-viewport',
+    code: 'T05',
     officialDocs: [{ title: 'The Viewport', url: 'https://reactflow.dev/learn/concepts/the-viewport' }],
+    prerequisites: ['01-controlled-flow'],
+    notePath: '../notes/05-坐标与视口.md',
+    status: '骨架已准备',
+    group: 'Core Concepts',
+    title: '坐标与视口',
+    file: 'src/topics/05-coordinates-and-viewport/ViewportExercise.tsx',
+    goal: '区分屏幕坐标与流程坐标，理解视口 { x, y, zoom } 如何把节点 position 显示到屏幕上，并用 useReactFlow 的视口方法换算坐标、移动视口。',
+    exercises: [
+      '不改代码：对照页面上的 viewport 读数，确认初始时 A（流程坐标 0,0）显示在画布容器的 (80, 60)；平移、缩放后看读数变化，并确认控制台没有 onNodesChange 日志。',
+      'V1：在 designToolProps 中填写设计工具式配置，切换两种操作方式，对比拖动空白处、滚轮、Shift 拖动的效果。',
+      'V2：在 toFlowPosition 中用 screenToFlowPosition 换算坐标；平移或缩放后点击同一屏幕位置，记录 clientPosition 不变、flowPosition 变化，并核对 roundTrip。',
+      'V3：勾选“点击空白处放置节点”，在点击处添加节点；放好后平移、缩放，确认新节点和其他节点一起移动。',
+      'V4：实现“聚焦 B”（fitView 的 nodes 选项）与“回到初始视口”（setViewport），观察 onMoveEnd 日志里的 hasEvent 与手动平移时有何不同。',
+    ],
+    expected: '平移、缩放只改变 viewport 读数，节点 position 不变；同一屏幕点在不同视口下换算出不同的流程坐标；新节点按流程坐标保存，随视口一起移动；两个按钮能带动画移动视口。',
+    boundary: '本章只覆盖视口与坐标换算，不包含自定义节点、新建连线、translateExtent / minZoom 等视口限制和受控 viewport 属性。V1–V4 为待学习者填写的 TODO，未填写前对应按钮只打印提示。切换操作方式不重置画布。',
+    component: ViewportExercise,
   },
   {
     id: '06-custom-edges', code: 'T06', title: '自定义边', prerequisites: [], status: '未开始',
