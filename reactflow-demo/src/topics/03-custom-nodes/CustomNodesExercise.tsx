@@ -81,13 +81,13 @@ const initialEdges: Edge[] = [
   { id: 'a-b', source: 'card-a', target: 'card-b' },
 ]
 
-// TODO N1：填写 React Flow 默认识别的三个工具类名（见官方 Utility Classes 与 ReactFlow/index.tsx:121-123）。
-// 未填写前为空字符串，滑块拖动会带动整个节点移动，在日志框里滚轮会缩放整张画布。
+// N1：React Flow 默认识别的三个工具类名（见官方 Utility Classes 与 ReactFlow/index.tsx:121-123）。
+// 去掉它们时，滑块拖动会带动整个节点移动，在备注框里滚轮会缩放整张画布。
 const UTILITY_CLASSES = {
   // 阻止从控件启动节点拖动（XYDrag.ts:408 的 filter 检查）
-  noDrag: '',
+  noDrag: 'nodrag',
   // 阻止在滚动容器内触发画布滚轮缩放或滚轮平移（filter.ts:65、eventhandler.ts:74）
-  noWheel: '',
+  noWheel: 'nowheel',
   // 阻止在可交互区域内按下拖动时触发画布平移（filter.ts:71）
   noPan: '',
 }
@@ -105,15 +105,14 @@ function InspectorCardNodeComponent({
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const nextTitle = event.target.value
-    // TODO N2-a：调用 updateNodeData(id, { title: nextTitle }) 把新标题写回节点 data。
-    void updateNodeData
-    console.info('[自定义节点 / 输入] TODO N2-a 尚未实现：updateNodeData 更新 title', { id, nextTitle })
+    // N2-a：updateNodeData 把新旧 data 浅合并后生成 { type: 'replace', id, item } 交给 onNodesChange。
+    updateNodeData(id, { title: nextTitle })
   }
 
   const handleStepChange = (event: ChangeEvent<HTMLInputElement>) => {
     const nextStepCount = Number(event.target.value)
-    // TODO N2-b：调用 updateNodeData(id, { stepCount: nextStepCount }) 把滑块数值写回节点 data。
-    console.info('[自定义节点 / 滑块] TODO N2-b 尚未实现：updateNodeData 更新 stepCount', { id, nextStepCount })
+    // N2-b：同样通过 updateNodeData 把滑块数值写回节点 data。
+    updateNodeData(id, { stepCount: nextStepCount })
   }
 
   return (
@@ -176,10 +175,11 @@ function InspectorCardNodeComponent({
 
 // nodeTypes 必须定义在组件外部（或用 useMemo 缓存）：
 // 如果每次渲染都创建新对象，NodeWrapper 会认为节点组件类型变了，导致自定义节点反复卸载重建、输入框丢焦点。
-// TODO N3：把 inspectorCard 映射到上面的 InspectorCardNodeComponent。
-// 未注册前，NodeWrapper 查不到该类型，会触发 003 告警并回退成默认节点（NodeWrapper/index.tsx:56-62）。
-void InspectorCardNodeComponent
-const nodeTypes = {} satisfies NodeTypes
+// N3：把 inspectorCard 映射到上面的 InspectorCardNodeComponent。
+// 若设为空对象 {}，NodeWrapper 查不到该类型，会触发 003 告警并回退成默认节点（NodeWrapper/index.tsx:56-62）。
+const nodeTypes = {
+  inspectorCard: InspectorCardNodeComponent,
+} satisfies NodeTypes
 
 export default function CustomNodesExercise() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
@@ -198,16 +198,23 @@ export default function CustomNodesExercise() {
   return (
     <section className="app custom-nodes-exercise">
       <header>
-        <p className="eyebrow">CUSTOMIZATION / CUSTOM NODES & UTILITY CLASSES</p>
+        <p className="eyebrow">
+          CUSTOMIZATION / CUSTOM NODES & UTILITY CLASSES
+        </p>
         <h1>自定义节点：注册 nodeTypes、内部控件更新与工具类名</h1>
-        <p className="description">自定义节点就是普通 React 组件，通过 NodeProps 拿到 id、data、selected、dragging，并在内部放 Handle 和表单控件。在文件顶部的静态 nodeTypes 中注册组件（N3），补齐 nodrag / nowheel / nopan（N1）与 updateNodeData（N2）。</p>
+        <p className="description">
+          自定义节点就是普通 React 组件，通过 NodeProps 拿到
+          id、data、selected、dragging，并在内部放 Handle
+          和表单控件。在文件顶部的静态 nodeTypes 中注册组件（N3），补齐 nodrag /
+          nowheel / nopan（N1）与 updateNodeData（N2）。
+        </p>
       </header>
       <div className="header-actions">
         <button
           type="button"
           onClick={() => {
-            setNodes(initialNodes)
-            setMissingTypeWarning(null)
+            setNodes(initialNodes);
+            setMissingTypeWarning(null);
           }}
         >
           恢复初始节点
@@ -226,9 +233,10 @@ export default function CustomNodesExercise() {
           defaultEdgeOptions={defaultEdgeOptions}
           onNodesChange={handleNodesChange}
           onEdgesChange={onEdgesChange}
+          // deleteKeyCode={["Backspace", "Delete"]}
           onError={(code, message) => {
-            console.warn(`[自定义节点 / onError ${code}]`, message)
-            if (code === '003') setMissingTypeWarning(message)
+            console.warn(`[自定义节点 / onError ${code}]`, message);
+            if (code === "003") setMissingTypeWarning(message);
           }}
           fitView
         >
@@ -236,7 +244,12 @@ export default function CustomNodesExercise() {
           <Controls showInteractive={false} />
         </ReactFlow>
       </section>
-      <p className="app-footer">nodeTypes 定义在组件外部，避免重渲染时节点卸载重建导致输入框失焦。未完成 N3 时，inspectorCard 节点会回退成无标签的默认方框并触发 003 告警；未完成 N1 时，拖滑块会拖动节点、在备注框滚轮会缩放画布。切换章节或刷新会恢复初始状态。</p>
+      <p className="app-footer">
+        nodeTypes 定义在组件外部，避免重渲染时节点卸载重建导致输入框失焦。未完成
+        N3 时，inspectorCard 节点会回退成无标签的默认方框并触发 003 告警；未完成
+        N1
+        时，拖滑块会拖动节点、在备注框滚轮会缩放画布。切换章节或刷新会恢复初始状态。
+      </p>
     </section>
-  )
+  );
 }

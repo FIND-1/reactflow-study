@@ -32,7 +32,7 @@ pnpm preview  # 预览构建结果
 | A3 | Building a Flow | 骨架已准备；从静态数据搭建节点、连线，调整位置、文字和线形；之后深入 T01、T02 |
 | T01 | [受控流](src/topics/01-controlled-flow/README.md) | 笔记完成；两种 handler 对照，手写组还锁定了一个不可删除的节点；收尾项完成前不标已验收 |
 | T02 | [连线](src/topics/02-connection/README.md) | 笔记完成；Handle、R1–R5 校验与受控存边已实现，待 review 验收 |
-| T03 | [自定义节点](src/topics/03-custom-nodes/README.md) | 骨架已准备；自定义节点注册、内部控件 `updateNodeData` 与 `nodrag` / `nowheel` / `nopan`（N1–N3 待填写） |
+| T03 | [自定义节点](src/topics/03-custom-nodes/README.md) | 笔记完成；自定义节点注册、内部控件 `updateNodeData` 与 `nodrag` / `nowheel` / `nopan` 已实现，待 review 验收 |
 | T05 | [坐标与视口](src/topics/05-coordinates-and-viewport/README.md) | 骨架已准备；屏幕坐标与流程坐标换算、交互方式切换、`fitView` / `setViewport`（V1–V4 待填写） |
 
 T04、T06–T08 为尚未开始的计划条目；T08“节点间数据流”以前置 T01“受控流”衔接 Computing Flows，暂不创建页面、练习目录或笔记。完整进度见[工作区 README](../README.md)，官方页面安排见[覆盖检查表](docs/learning-path.md#覆盖检查表)。
@@ -59,7 +59,7 @@ B 组的练习 1.5 把 `n1` 设成不可删除的流程入口：`handleNodesChan
 - [BuildingFlowDemo.tsx](src/lessons/03-building-a-flow/BuildingFlowDemo.tsx)：静态流程练习。
 - [ControlledFlowExercise.tsx](src/topics/01-controlled-flow/ControlledFlowExercise.tsx)：受控流两种写法的对照实现（先打印 changes，再更新状态），含练习 1.5 的「n1 不可删除」。
 - [受控流笔记](../notes/01-受控流.md)：源码阅读问题、changes 数据流梳理与对照记录。
-- [CustomNodesExercise.tsx](src/topics/03-custom-nodes/CustomNodesExercise.tsx)：自定义节点骨架，保留 N1–N3（工具类名、`updateNodeData`、`nodeTypes` 注册）待填写。
+- [CustomNodesExercise.tsx](src/topics/03-custom-nodes/CustomNodesExercise.tsx)：自定义节点实现（N1–N3 工具类名、`updateNodeData`、`nodeTypes` 注册均已完成）。
 - [自定义节点笔记](../notes/03-自定义节点.md)：`NodeWrapper`、工具类名过滤与 `updateNodeData` 阅读指引及预测记录表。
 - [ViewportExercise.tsx](src/topics/05-coordinates-and-viewport/ViewportExercise.tsx)：坐标与视口骨架，保留 V1–V4（设计工具式交互、坐标换算、点击放置节点、视口控制）待填写。
 - [坐标与视口笔记](../notes/05-坐标与视口.md)：`useViewportHelper`、坐标换算公式与 `XYPanZoom` 阅读指引及预测记录表。

@@ -7,20 +7,20 @@
 - 注册表：[topics/index.ts](../index.ts)
 - 官方文档：[Nodes](https://reactflow.dev/learn/customization/custom-nodes)、[Utility Classes](https://reactflow.dev/learn/customization/utility-classes)、[TypeScript](https://reactflow.dev/learn/advanced-use/typescript)
 - 前置：T01 · 受控流、T02 · 连线
-- 状态：骨架已准备（N1–N3 待学习者填写）。
+- 状态：笔记完成（N1–N3 已实现，待 review 验收）。
 - 页面：在 demo 本地地址后附加 `#topics/03-custom-nodes`。
 
 ## 练习内容
 
-已准备：1 个内置 `input` 节点与 2 个 `inspectorCard` 类型的节点数据（参照 `02-connection` 的 A → B 横向排布，设置 `sourcePosition: Position.Right` / `targetPosition: Position.Left` 并带箭头）、带类型注解的 `InspectorCardNodeComponent`（含左右 `Handle`、标题输入框、步数滑块、可滚动备注列表，以及 `selected` / `dragging` 状态展示），并接好了 `onError`（用于观察未注册 `nodeTypes` 时的 `003` 告警）和 `onNodesChange` 日志。
+已准备并实现：1 个内置 `input` 节点与 2 个 `inspectorCard` 类型的节点数据（参照 `02-connection` 的 A → B 横向排布，设置 `sourcePosition: Position.Right` / `targetPosition: Position.Left` 并固定左右 Handle 距顶部 `20px` 保持同一水平线）、带类型注解的 `InspectorCardNodeComponent`（含左右 `Handle`、标题输入框、步数滑块、可滚动备注列表，以及 `selected` / `dragging` 状态展示），并接好了 `onError`（用于观察未注册 `nodeTypes` 时的 `003` 告警）和 `onNodesChange` 日志。
 
-待填写的 TODO：
+已完成的练习项（想自己重练可临时清空对应位置）：
 
 | 编号 | 位置 | 内容 |
 | --- | --- | --- |
-| N3（建议先填） | `nodeTypes` | 在模块顶层把 `inspectorCard` 映射到 `InspectorCardNodeComponent`，消除 `003` 回退告警 |
+| N3 | `nodeTypes` | 在模块顶层把 `inspectorCard` 映射到 `InspectorCardNodeComponent`，消除 `003` 回退告警 |
 | N1 | `UTILITY_CLASSES` | 填写 `nodrag`、`nowheel`、`nopan`，让节点内输入框、滑块和滚动框不与画布手势冲突 |
-| N2-a / N2-b | `handleTitleChange` / `handleStepChange` | 用 `useReactFlow().updateNodeData` 把输入和滑块的新值写回节点 `data` |
+| N2-a / N2-b | `handleTitleChange` / `handleStepChange` | 用 `useReactFlow().updateNodeData` 把输入和滑块的新值浅合并写回节点 `data` |
 
 ## 功能边界
 
