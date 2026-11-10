@@ -10,7 +10,7 @@
 4. 对照预期现象验收，用自己的话解释数据和界面的关系。
 5. 遇到“为什么”再追踪对应库源码；完成后进入下一章。
 
-基础示例 01～03 保留在 lessons，侧栏显示为“入门” A1～A3；知识点显示为 T01～T08，目录与 hash 不变。T01、T02 的前置入门均为 A3，A3 的关联区块提供这两个知识点入口；T03 的前置是 T01、T02，T05 和 T08 的前置是 T01，其余未开始知识点的前置列表为空。侧栏仅显示编号与标题，知识点额外显示状态徽章；官方文档统一在页面关联区块列出，空数组不显示文档行。未开始的知识点只在侧栏灰色展示，不参与路由和翻页。侧栏切换或翻页会重新加载示例，因此临时画布编辑和视角会重置；对源码的修改保留在文件中。状态由注册表和根 README 显式记录，不自动认定你已学完。
+基础示例 01～03 保留在 lessons，侧栏显示为“入门” A1～A3；知识点显示为 T01～T08，目录与 hash 不变。T01、T02 的前置入门均为 A3，A3 的关联区块提供这两个知识点入口；T03 的前置是 T01、T02，T04 的前置是 T01、T03，T05 和 T08 的前置是 T01，其余未开始知识点的前置列表为空。侧栏仅显示编号与标题，知识点额外显示状态徽章；官方文档统一在页面关联区块列出，空数组不显示文档行。未开始的知识点只在侧栏灰色展示，不参与路由和翻页。侧栏切换或翻页会重新加载示例，因此临时画布编辑和视角会重置；对源码的修改保留在文件中。状态由注册表和根 README 显式记录，不自动认定你已学完。
 
 ## 已准备的入口
 
@@ -22,6 +22,7 @@
 | T01 | [Adding Interactivity](https://reactflow.dev/learn/concepts/adding-interactivity)、[Uncontrolled Flow](https://reactflow.dev/learn/advanced-use/uncontrolled-flow) | [ControlledFlowExercise.tsx](../src/topics/01-controlled-flow/ControlledFlowExercise.tsx) | 受控流对照实现；Uncontrolled Flow 用于对照阅读，不表示新增非受控练习 |
 | T02 | [Handles](https://reactflow.dev/learn/customization/handles)、[Adding Interactivity](https://reactflow.dev/learn/concepts/adding-interactivity) | [ConnectionExercise.tsx](../src/topics/02-connection/ConnectionExercise.tsx) | 连线与业务校验，R1–R5 与存边逻辑已实现 |
 | T03 | [Nodes](https://reactflow.dev/learn/customization/custom-nodes)、[Utility Classes](https://reactflow.dev/learn/customization/utility-classes)、[TypeScript](https://reactflow.dev/learn/advanced-use/typescript) | [CustomNodesExercise.tsx](../src/topics/03-custom-nodes/CustomNodesExercise.tsx) | 自定义节点：注册 `nodeTypes`、`updateNodeData` 与 `nodrag` / `nowheel` / `nopan` 已实现 |
+| T04 | [Hooks and Providers](https://reactflow.dev/learn/advanced-use/hooks-providers)、[State Management](https://reactflow.dev/learn/advanced-use/state-management) | [StoreAndHooksExercise.tsx](../src/topics/04-store-and-hooks/StoreAndHooksExercise.tsx) | Store 与 Hooks：`ReactFlowProvider`、`useStore` 切片订阅、`useStoreApi`、`useReactFlow` 已实现 |
 | T05 | [The Viewport](https://reactflow.dev/learn/concepts/the-viewport) | [ViewportExercise.tsx](../src/topics/05-coordinates-and-viewport/ViewportExercise.tsx) | 坐标与视口骨架：屏幕坐标与流程坐标换算、交互方式切换、`fitView` / `setViewport`（V1–V4 待填写） |
 
 具体任务、预期现象显示在页面上；基础示例登记在 [lessons 注册表](../src/lessons/index.ts)，知识点登记在 [topics 注册表](../src/topics/index.ts)。这些是可以开始练习的入口，不代表学习进度已完成；总进度见 [工作区 README](../../README.md)。页面按 hash 切换，可刷新直达及前进后退。
@@ -57,13 +58,13 @@
 | Customization | Theming | 需要时再学 | 调整主题时阅读 |
 | Layouting | Overview | 需要时再学 | 有布局需求时阅读 |
 | Layouting | Sub Flows | 需要时再学 | 有子流程需求时阅读 |
-| Advanced Use | Hooks and Providers | 对应知识点 | T04 · Store 与 Hooks |
+| Advanced Use | Hooks and Providers | 对应知识点 | T04 · Store 与 Hooks，前置 T01、T03 |
 | Advanced Use | Accessibility | 暂不学 | — |
 | Advanced Use | Testing | 暂不学 | — |
 | Advanced Use | TypeScript | 对应知识点 | T03 · 自定义节点，前置 T01、T02 |
 | Advanced Use | Uncontrolled Flow | 对应知识点 | T01 · 受控流（对照阅读） |
 | Advanced Use | Performance | 对应知识点 | T07 · 性能 |
-| Advanced Use | State Management | 对应知识点 | T04 · Store 与 Hooks |
+| Advanced Use | State Management | 对应知识点 | T04 · Store 与 Hooks，前置 T01、T03 |
 | Advanced Use | Computing Flows | 对应知识点 | T08 · 节点间数据流，前置 T01 |
 | Advanced Use | Server Side Rendering | 暂不学 | — |
 | Advanced Use | Devtools | 暂不学 | — |

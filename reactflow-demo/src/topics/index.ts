@@ -2,6 +2,7 @@ import type { LearningStatus, Lesson } from '../lessons'
 import ControlledFlowExercise from './01-controlled-flow/ControlledFlowExercise'
 import ConnectionExercise from './02-connection/ConnectionExercise'
 import CustomNodesExercise from './03-custom-nodes/CustomNodesExercise'
+import StoreAndHooksExercise from './04-store-and-hooks/StoreAndHooksExercise'
 import ViewportExercise from './05-coordinates-and-viewport/ViewportExercise'
 
 type TopicMetadata = Pick<Lesson, 'id' | 'code' | 'title' | 'officialDocs'> & {
@@ -95,11 +96,27 @@ export const topics: Topic[] = [
     component: CustomNodesExercise,
   },
   {
-    id: '04-store-and-hooks', code: 'T04', title: 'Store 与 Hooks', prerequisites: [], status: '未开始',
+    id: '04-store-and-hooks',
+    code: 'T04',
     officialDocs: [
       { title: 'Hooks and Providers', url: 'https://reactflow.dev/learn/advanced-use/hooks-providers' },
       { title: 'State Management', url: 'https://reactflow.dev/learn/advanced-use/state-management' },
     ],
+    prerequisites: ['01-controlled-flow', '03-custom-nodes'],
+    notePath: '../notes/04-Store与Hooks.md',
+    status: '笔记完成',
+    group: 'Advanced Use',
+    title: 'Store 与 Hooks',
+    file: 'src/topics/04-store-and-hooks/StoreAndHooksExercise.tsx',
+    goal: '理解 ReactFlowProvider 的作用域边界，区分 useStore（响应式切片订阅 + equalityFn）、useStoreApi（按需读取快照不触发重渲染）与 useReactFlow（高层业务操作）。',
+    exercises: [
+      '对照 summarySelector 与 isSameSummary（S1），点击未选节点确认状态栏渲染次数只 +1；拖动已选节点或平移画布，确认状态栏渲染次数不增加。',
+      '点击「读取 Store 快照（useStoreApi · S2）」，在控制台查看一次性读取的 transform 与 nodeLookup，确认状态栏渲染次数不变。',
+      '点击「全选节点（S3-a）」与「新增节点（S3-b）」，观察 useReactFlow 如何通过 BatchProvider 更新受控画布并同步到状态栏。',
+    ],
+    expected: '顶部状态栏实时显示节点数、边数和已选节点 ID；每选中一个节点状态栏只重渲染 1 次；拖动已选中节点或平移缩放画布时状态栏不重渲染；点击读取快照只打日志不重渲染；全选与新增节点能同步更新受控画布与状态栏。',
+    boundary: '本章聚焦 React Flow 内置 Zustand store、ReactFlowProvider 及三个核心 Hook 的职责边界，不引入外部状态库接管。S1–S3 已实现；状态栏与画布拆为平级兄弟组件以避免父组件 state 更新造成额外重渲染。',
+    component: StoreAndHooksExercise,
   },
   {
     id: '05-coordinates-and-viewport',
