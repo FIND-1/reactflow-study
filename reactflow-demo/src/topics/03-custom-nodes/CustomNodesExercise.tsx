@@ -3,6 +3,7 @@ import {
   Background,
   Controls,
   Handle,
+  MarkerType,
   Position,
   ReactFlow,
   useEdgesState,
@@ -25,21 +26,27 @@ export type InspectorCardData = {
 }
 export type InspectorCardNode = Node<InspectorCardData, 'inspectorCard'>
 
-// 故意保留一个内置 default 节点与两个自定义节点同场对照：
-// NodeWrapper 会按 node.type 先查我们传入的 nodeTypes，查不到再回退到 builtinNodeTypes。
+// 参照 02-connection 的 A → B 横向排布：
+// 内置节点通过 sourcePosition / targetPosition 设为左右连接点（Right 输出、Left 输入），
+// 自定义节点也用 Left 输入、Right 输出，并加上闭合箭头，这样无论 N3 是否注册，连线都是水平笔直向右。
+const defaultEdgeOptions = { markerEnd: { type: MarkerType.ArrowClosed } }
+
 const initialNodes: (InspectorCardNode | Node<{ label: string }>)[] = [
   {
     id: 'entry',
-    type: 'default',
-    position: { x: 0, y: 110 },
-    data: { label: '内置 default 节点（对照）' },
+    type: 'input',
+    position: { x: 40, y: 0 },
+    sourcePosition: Position.Right,
+    data: { label: '内置 input 节点（对照）' },
   },
   {
     id: 'card-a',
     type: 'inspectorCard',
-    position: { x: 250, y: 20 },
+    position: { x: 240, y: 0 },
+    sourcePosition: Position.Right,
+    targetPosition: Position.Left,
     data: {
-      title: '数据清洗',
+      title: 'A · 数据清洗',
       stepCount: 2,
       notes: [
         '1. 拖动标题或卡片空白处，整个节点应该移动',
@@ -53,9 +60,11 @@ const initialNodes: (InspectorCardNode | Node<{ label: string }>)[] = [
   {
     id: 'card-b',
     type: 'inspectorCard',
-    position: { x: 600, y: 80 },
+    position: { x: 580, y: 0 },
+    sourcePosition: Position.Right,
+    targetPosition: Position.Left,
     data: {
-      title: '汇总输出',
+      title: 'B · 汇总输出',
       stepCount: 5,
       notes: [
         '点击卡片切换 selected 状态，观察外框高亮',
@@ -113,7 +122,7 @@ function InspectorCardNodeComponent({
       data-selected={selected}
       data-dragging={dragging}
     >
-      {/* 自定义节点不会自动生成连接点，必须显式渲染 Handle 才能连线。 */}
+      {/* 自定义节点不会自动生成连接点，必须显式渲染 Handle 才能连线；这里与 02-connection 一样采用左侧输入、右侧输出。 */}
       <Handle type="target" position={Position.Left} isConnectable={isConnectable} />
 
       <div className="inspector-card-header">
@@ -214,6 +223,7 @@ export default function CustomNodesExercise() {
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
+          defaultEdgeOptions={defaultEdgeOptions}
           onNodesChange={handleNodesChange}
           onEdgesChange={onEdgesChange}
           onError={(code, message) => {

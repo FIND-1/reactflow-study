@@ -12,7 +12,7 @@
 
 ## 练习内容
 
-已准备：1 个内置 `default` 节点与 2 个 `inspectorCard` 类型的节点数据、带类型注解的 `InspectorCardNodeComponent`（含左右 `Handle`、标题输入框、步数滑块、可滚动备注列表，以及 `selected` / `dragging` 状态展示），并接好了 `onError`（用于观察未注册 `nodeTypes` 时的 `003` 告警）和 `onNodesChange` 日志。
+已准备：1 个内置 `input` 节点与 2 个 `inspectorCard` 类型的节点数据（参照 `02-connection` 的 A → B 横向排布，设置 `sourcePosition: Position.Right` / `targetPosition: Position.Left` 并带箭头）、带类型注解的 `InspectorCardNodeComponent`（含左右 `Handle`、标题输入框、步数滑块、可滚动备注列表，以及 `selected` / `dragging` 状态展示），并接好了 `onError`（用于观察未注册 `nodeTypes` 时的 `003` 告警）和 `onNodesChange` 日志。
 
 待填写的 TODO：
 

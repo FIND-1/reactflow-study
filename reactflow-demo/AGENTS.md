@@ -57,6 +57,7 @@ const onConnect = useCallback<OnConnect>((connection) => {
 以下约定优先于上文“新增练习放入 lessons”的目录规则，官方章节仍作为阅读主线。
 
 - `src/lessons/01-*`～`03-*` 保留为基础示例；今后新增知识点必须放进 `src/topics/NN-name/`，不要继续往 lessons 累加。
+- 单章专属的画布组件（`.tsx`）、辅助规则或纯函数（`.ts`）、专属样式（`.css`）和 `README.md` 就近放在所属 `src/topics/NN-name/` 目录内，不拆到外层全局目录。跨章节共用的页面外壳、导航与工具栏通用样式（如 `.app`、`.flow-container`、`.header-actions` 及 `button[aria-pressed='true']`）统一放在 `src/App.css`；各章节 `.css` 中的选择器必须以该章根类名（如 `.connection-exercise`、`.custom-nodes-exercise`、`.viewport-exercise`）作为作用域前缀，避免污染其他章节。
 - 每个知识点目录必须有 README.md，写明对应编号笔记、SOURCE_MAP 条目、练习内容、状态与功能边界。
 - 在 `src/topics/index.ts` 注册 id、显示编号、知识点标题、组件、笔记路径、状态及学习指引；笔记路径相对于 demo 根目录。显示编号使用 T01、T02……，与 topics 和 notes 编号一致，标题只写知识点名。
 - 新增知识点必须填写 `officialDocs: { title, url }[]` 与 `prerequisites`。`officialDocs` 可为空数组，页面不显示空文档行或占位文字；不要编造官方页面名或修改给定 URL。`prerequisites` 以 lessons 或 topics 注册表的唯一 id 数组记录，无前置时使用空数组；涉及入门关联时同步维护 `lessons/index.ts` 的 `deepensTopics`。

@@ -1,8 +1,12 @@
 .custom-nodes-exercise.app { height: auto; min-height: 760px; }
 .custom-nodes-exercise .flow-container { flex: none; height: 480px; }
-.custom-nodes-warning { color: #b45309; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 6px 10px; font-size: 13px; }
+.custom-nodes-exercise .react-flow__handle { width: 12px; height: 12px; }
+/* 固定左右 Handle 在距顶部 20px 处，使不同高度的节点在 y 相同时连线始终保持同一条水平线。 */
+.custom-nodes-exercise .react-flow__handle-left,
+.custom-nodes-exercise .react-flow__handle-right { top: 20px; }
+.custom-nodes-exercise .custom-nodes-warning { color: #b45309; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 6px 10px; font-size: 13px; }
 
-.inspector-card-node {
+.custom-nodes-exercise .inspector-card-node {
   width: 260px;
   padding: 12px;
   border-radius: 10px;
@@ -14,16 +18,16 @@
   text-align: left;
 }
 
-.inspector-card-node[data-selected='true'] {
+.custom-nodes-exercise .inspector-card-node[data-selected='true'] {
   border-color: #4f46e5;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
 }
 
-.inspector-card-node[data-dragging='true'] {
+.custom-nodes-exercise .inspector-card-node[data-dragging='true'] {
   opacity: 0.88;
 }
 
-.inspector-card-header {
+.custom-nodes-exercise .inspector-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,7 +35,7 @@
   margin-bottom: 8px;
 }
 
-.inspector-card-badges {
+.custom-nodes-exercise .inspector-card-badges {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -39,28 +43,28 @@
   color: #475569;
 }
 
-.inspector-card-badges code,
-.inspector-card-badges span {
+.custom-nodes-exercise .inspector-card-badges code,
+.custom-nodes-exercise .inspector-card-badges span {
   padding: 1px 5px;
   border-radius: 4px;
   background: #f1f5f9;
 }
 
-.inspector-card-field {
+.custom-nodes-exercise .inspector-card-field {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-top: 8px;
 }
 
-.inspector-card-field input[type='text'] {
+.custom-nodes-exercise .inspector-card-field input[type='text'] {
   padding: 4px 8px;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
   font-size: 12px;
 }
 
-.inspector-card-notes {
+.custom-nodes-exercise .inspector-card-notes {
   margin: 0;
   padding: 6px 8px 6px 20px;
   max-height: 68px;

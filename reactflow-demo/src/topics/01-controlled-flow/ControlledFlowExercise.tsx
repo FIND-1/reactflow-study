@@ -40,7 +40,7 @@ function HookHandlerExercise() {
     (changes) => {
       // 初始化测量、拖动、选中等操作都会触发回调；先观察 type、id 和附加字段。
       console.log('[A / useNodesState] onNodesChange', changes)
-      onNodesChange(changes)
+      // onNodesChange(changes)
     },
     [onNodesChange],
   )
@@ -48,7 +48,7 @@ function HookHandlerExercise() {
   const handleEdgesChange = useCallback<OnEdgesChange>(
     (changes) => {
       console.log('[A / useEdgesState] onEdgesChange', changes)
-      onEdgesChange(changes)
+      onEdgesChange(changes)  
     },
     [onEdgesChange],
   )
