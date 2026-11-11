@@ -23,7 +23,7 @@
 | T02 | [Handles](https://reactflow.dev/learn/customization/handles)、[Adding Interactivity](https://reactflow.dev/learn/concepts/adding-interactivity) | [ConnectionExercise.tsx](../src/topics/02-connection/ConnectionExercise.tsx) | 连线与业务校验，R1–R5 与存边逻辑已实现 |
 | T03 | [Nodes](https://reactflow.dev/learn/customization/custom-nodes)、[Utility Classes](https://reactflow.dev/learn/customization/utility-classes)、[TypeScript](https://reactflow.dev/learn/advanced-use/typescript) | [CustomNodesExercise.tsx](../src/topics/03-custom-nodes/CustomNodesExercise.tsx) | 自定义节点：注册 `nodeTypes`、`updateNodeData` 与 `nodrag` / `nowheel` / `nopan` 已实现 |
 | T04 | [Hooks and Providers](https://reactflow.dev/learn/advanced-use/hooks-providers)、[State Management](https://reactflow.dev/learn/advanced-use/state-management) | [StoreAndHooksExercise.tsx](../src/topics/04-store-and-hooks/StoreAndHooksExercise.tsx) | Store 与 Hooks：`ReactFlowProvider`、`useStore` 切片订阅、`useStoreApi`、`useReactFlow` 已实现 |
-| T05 | [The Viewport](https://reactflow.dev/learn/concepts/the-viewport) | [ViewportExercise.tsx](../src/topics/05-coordinates-and-viewport/ViewportExercise.tsx) | 坐标与视口骨架：屏幕坐标与流程坐标换算、交互方式切换、`fitView` / `setViewport`（V1–V4 待填写） |
+| T05 | [The Viewport](https://reactflow.dev/learn/concepts/the-viewport) | [ViewportExercise.tsx](../src/topics/05-coordinates-and-viewport/ViewportExercise.tsx) | 坐标与视口：屏幕坐标与流程坐标换算、交互方式切换、`fitView` / `setViewport` 已实现 |
 
 具体任务、预期现象显示在页面上；基础示例登记在 [lessons 注册表](../src/lessons/index.ts)，知识点登记在 [topics 注册表](../src/topics/index.ts)。这些是可以开始练习的入口，不代表学习进度已完成；总进度见 [工作区 README](../../README.md)。页面按 hash 切换，可刷新直达及前进后退。
 

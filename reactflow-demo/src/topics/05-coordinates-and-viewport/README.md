@@ -7,23 +7,21 @@
 - 注册表：[topics/index.ts](../index.ts)
 - 官方文档：[The Viewport](https://reactflow.dev/learn/concepts/the-viewport)
 - 前置：T01 · 受控流（会用到 `onNodesChange` 日志判断“视口变化不产生节点 changes”）
-- 状态：骨架已准备（V1–V4 待学习者填写）。
+- 状态：笔记完成（V1–V4 已实现，待 review 验收）。
 - 页面：在 demo 本地地址后附加 `#topics/05-coordinates-and-viewport`。
 
 ## 练习内容
 
-已准备：三个节点 A/B/C、固定初始视口 `{ x: 80, y: 60, zoom: 1 }`（不用 `fitView`，方便对照换算）、页面上的实时 viewport 读数、点击空白处的坐标日志、`onMoveEnd` 日志，以及只打印类型的 `onNodesChange` 日志。
+已准备并实现：三个节点 A/B/C、固定初始视口 `{ x: 80, y: 60, zoom: 1 }`（不用 `fitView`，方便对照换算）、页面上的实时 viewport 读数、点击空白处的坐标日志、`onMoveEnd` 日志，以及只打印类型的 `onNodesChange` 日志。
 
-待填写的 TODO：
+已完成的练习项（想自己重练可临时清空对应位置）：
 
 | 编号 | 位置 | 内容 |
 | --- | --- | --- |
-| V1 | `designToolProps` | 设计工具式操作：`panOnScroll`、`selectionOnDrag`、`panOnDrag`、`selectionMode` |
+| V1 | `designToolProps` | 设计工具式操作：`panOnScroll: true`、`panOnDrag: false`、`selectionOnDrag: true`、`selectionMode: SelectionMode.Partial` |
 | V2 | `toFlowPosition` | 用 `screenToFlowPosition` 把 client 坐标换算成流程坐标 |
 | V3 | `handlePaneClick` 的放置分支 | 在点击处按流程坐标新增节点 |
-| V4 | `focusNodeB` / `resetViewport` | `fitView({ nodes })` 聚焦节点 B；`setViewport` 回到初始视口 |
-
-未填写前，相关按钮和点击只在控制台打印“尚未实现”。
+| V4 | `focusNodeB` / `resetViewport` | `fitView({ nodes: [{ id: 'b' }], duration: 400 })` 聚焦节点 B；`setViewport(initialViewport, { duration: 400 })` 回到初始视口 |
 
 ## 功能边界
 

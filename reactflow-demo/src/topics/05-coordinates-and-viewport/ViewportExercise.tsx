@@ -4,6 +4,7 @@ import {
   Controls,
   ReactFlow,
   ReactFlowProvider,
+  SelectionMode,
   useEdgesState,
   useNodesState,
   useReactFlow,
@@ -42,11 +43,15 @@ type ControlProps = Partial<Pick<ReactFlowProps, 'panOnScroll' | 'panOnDrag' | '
 // 空对象表示全部使用库的默认值。
 const mapStyleProps: ControlProps = {}
 
-// TODO V1：按官方 The Viewport 一节，把这里改成「设计工具式」操作：
-// 滚轮平移（panOnScroll）、拖动空白处框选而不是平移（selectionOnDrag + panOnDrag），
-// 框选碰到一部分就算选中（selectionMode，需要从 @xyflow/react 导入 SelectionMode）。
-// 未填写前，切换到「设计工具式」不会有任何变化。
-const designToolProps: ControlProps = {}
+// V1：按官方 The Viewport 一节配置「设计工具式」操作：
+// 滚轮平移（panOnScroll）、拖动空白处框选而不是平移（selectionOnDrag + panOnDrag: false），
+// 框选碰到一部分就算选中（SelectionMode.Partial）。
+const designToolProps: ControlProps = {
+  panOnScroll: true,
+  panOnDrag: false,
+  selectionOnDrag: true,
+  selectionMode: SelectionMode.Partial,
+}
 
 function ViewportCanvas() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
@@ -70,11 +75,10 @@ function ViewportCanvas() {
   )
 
   // 把鼠标的屏幕坐标（clientX / clientY，相对浏览器窗口）换算成流程坐标。
-  // TODO V2：用 reactFlow.screenToFlowPosition 完成换算并返回结果。
-  // 未填写前返回 null，控制台会提示「尚未实现」。
+  // V2：screenToFlowPosition 先减去画布容器 getBoundingClientRect() 的偏移，
+  // 再按 (pos - translate) / zoom 换算成流程坐标（useViewportHelper.ts:84）。
   const toFlowPosition = (clientPosition: XYPosition): XYPosition | null => {
-    void clientPosition
-    return null
+    return reactFlow.screenToFlowPosition(clientPosition)
   }
 
   // 点击画布空白处：打印同一个点的两种坐标。
@@ -91,21 +95,33 @@ function ViewportCanvas() {
     console.log('[视口 / 点击]', { clientPosition, flowPosition, roundTrip, viewport: reactFlow.getViewport() })
 
     if (placeMode) {
-      // TODO V3：在 flowPosition 处新增一个节点（setNodes + 新的唯一 id）。
-      // 新节点要存流程坐标，不要存屏幕坐标；放好后平移、缩放，确认它和其他节点一起移动。
-      console.info('[视口 / 放置] TODO V3 尚未实现：在点击处添加节点', flowPosition)
+      // V3：在 flowPosition 处新增一个节点。
+      // 新节点必须存流程坐标而不是屏幕坐标；放好后平移、缩放，它会和其他节点一起移动。
+      const roundedX = Math.round(flowPosition.x)
+      const roundedY = Math.round(flowPosition.y)
+      setNodes((currentNodes) => {
+        const nextId = `p${currentNodes.length + 1}`
+        return [
+          ...currentNodes,
+          {
+            id: nextId,
+            position: { x: roundedX, y: roundedY },
+            data: { label: `${nextId.toUpperCase()} · flow (${roundedX}, ${roundedY})` },
+          },
+        ]
+      })
     }
   }
 
-  // TODO V4-a：用 reactFlow.fitView 只把节点 B 移到视口中央（nodes 选项），带 duration 动画。
+  // V4-a：用 reactFlow.fitView 只把节点 B 移到视口中央（nodes 选项），带 duration 动画。
   const focusNodeB = () => {
-    console.info('[视口 / 按钮] TODO V4-a 尚未实现：fitView 聚焦节点 B')
+    void reactFlow.fitView({ nodes: [{ id: 'b' }], duration: 400, padding: 0.4 })
   }
 
-  // TODO V4-b：用 reactFlow.setViewport 回到 initialViewport，带 duration 动画。
+  // V4-b：用 reactFlow.setViewport 回到 initialViewport，带 duration 动画。
   // 注意：控制栏的「适应视图」按钮调用的是 fitView，结果通常不等于初始视口。
   const resetViewport = () => {
-    console.info('[视口 / 按钮] TODO V4-b 尚未实现：setViewport 回到初始视口')
+    void reactFlow.setViewport(initialViewport, { duration: 400 })
   }
 
   return (
